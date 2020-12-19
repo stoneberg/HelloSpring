@@ -1,5 +1,6 @@
 package com.example.demo.home.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Arrays;
 import java.util.List;
 
+@Slf4j
 @Controller
 public class HomeController {
 
@@ -20,6 +22,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String main(Model model) {
+        log.info("main==================>");
         model.addAttribute("message", message);
         model.addAttribute("tasks", tasks);
 
@@ -31,7 +34,7 @@ public class HomeController {
     public String mainWithParam(
             @RequestParam(name = "name", required = false, defaultValue = "")
                     String name, Model model) {
-
+        log.info("hello==================>{}", name);
         model.addAttribute("message", name);
 
         return "welcome"; //view

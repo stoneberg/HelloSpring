@@ -14,13 +14,13 @@
 
     <!-- File Appender -->
     <appender name="FILEOUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>/app-log/demo/demo.log</file>
+        <file>/jb_log/esign11/esign.log</file>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <pattern>${LOG_PATTERN}</pattern>
         </encoder>
         <rollingPolicy
                 class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"> <!-- .gz,.zip 등을 넣으면 자동 일자별 로그파일 압축 -->
-            <fileNamePattern>/app-log/demo/demo.%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+            <fileNamePattern>/jb_log/esign11/esign.%d{yyyy-MM-dd}_%i.log</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP"> <!-- 파일당 최고 용량 kb, mb, gb -->
                 <maxFileSize>1GB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy> <!-- 일자별 로그파일 최대 보관주기(~일), 해당 설정일 이상된 파일은 자동으로 제거-->
@@ -30,15 +30,17 @@
 
     <!-- local -->
     <springProfile name="local">
-        <logger name="com.example.demo" level="INFO" additivity="false">
+        <logger name="com.ktds.esign" level="INFO" additivity="false">
             <appender-ref ref="STDOUT" />
+            <appender-ref ref="FILEOUT" />
         </logger>
 
         <logger name="org.springframework.web" level="INFO" additivity="false">
             <appender-ref ref="STDOUT" />
+            <appender-ref ref="FILEOUT" />
         </logger>
 
-        <root level="INFO">
+        <root level="ERROR">
             <appender-ref ref="STDOUT" />
             <appender-ref ref="FILEOUT" />
         </root>
