@@ -13,7 +13,7 @@ spring:
 logging:
   config: classpath:logback/logback-spring.xml
   file:
-    path: /app-log/demo
+    path: ../app-log/demo
     name: demo
 
 welcome:
