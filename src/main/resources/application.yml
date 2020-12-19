@@ -7,10 +7,18 @@ server:
 spring:
   thymeleaf:
     cache: false
-
+#  profiles:
+#    active: local # set deploy profile
 
 logging:
   config: classpath:logback/logback-spring.xml
+  file:
+    path: /app-log/demo
+    name: demo.log
+  logback:
+    rollingpolicy:
+      file-name-pattern: demo-%d{yyyy-MM-dd}.%i.log
+
 
 welcome:
   message: Stoneberg

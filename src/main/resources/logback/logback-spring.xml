@@ -2,8 +2,10 @@
 <configuration scanPeriod="60 seconds">
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
-    <!-- log file path -->
+    <!-- log file config -->
     <property name="LOG_PATTERN" value="%d{yyyyMMdd HH:mm:ss.SSS} [%thread] %-3level %logger{5} - %msg %n"/>
+<!--    <property name="LOG_LOCATION" value="/app-log/demo" />-->
+<!--    <property name="LOG_FILENAME" value="demo" />-->
 
     <!-- Console Appender -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
@@ -14,23 +16,24 @@
 
     <!-- File Appender -->
     <appender name="FILEOUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>../app-log/demo/demo.log</file>
+        <file>${LOG_PATH}/${LOG_FILE}</file>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <pattern>${LOG_PATTERN}</pattern>
         </encoder>
         <rollingPolicy
                 class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"> <!-- .gz,.zip 등을 넣으면 자동 일자별 로그파일 압축 -->
-            <fileNamePattern>../app-log/demo/demo.%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+            <fileNamePattern>${LOG_PATH}/archived/${ROLLING_FILE_NAME_PATTERN}</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP"> <!-- 파일당 최고 용량 kb, mb, gb -->
-                <maxFileSize>1GB</maxFileSize>
+                <maxFileSize>100MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy> <!-- 일자별 로그파일 최대 보관주기(~일), 해당 설정일 이상된 파일은 자동으로 제거-->
-            <maxHistory>15</maxHistory> <!--<MinIndex>1</MinIndex> <MaxIndex>10</MaxIndex>-->
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>10GB</totalSizeCap> <!-- 아카이브 총 용량이 3GB를 넘어가면 오래된 파일을 비동기적으로 삭제, 먼저 maxHistory설정이 있어야 사용 가능 -->
         </rollingPolicy>
     </appender>
 
     <!-- local -->
-    <springProfile name="local">
-        <logger name="com.ktds.esign" level="INFO" additivity="false">
+    <springProfile name="default, local">
+        <logger name="com.example.demo" level="INFO" additivity="false">
             <appender-ref ref="STDOUT" />
             <appender-ref ref="FILEOUT" />
         </logger>
@@ -40,7 +43,7 @@
             <appender-ref ref="FILEOUT" />
         </logger>
 
-        <root level="ERROR">
+        <root level="INFO">
             <appender-ref ref="STDOUT" />
             <appender-ref ref="FILEOUT" />
         </root>
