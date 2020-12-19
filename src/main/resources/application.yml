@@ -1,0 +1,16 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+
+spring:
+  thymeleaf:
+    cache: false
+
+
+logging:
+  config: classpath:logback/logback-spring.xml
+
+welcome:
+  message: Stoneberg
