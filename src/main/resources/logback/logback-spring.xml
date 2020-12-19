@@ -4,8 +4,7 @@
 
     <!-- log file config -->
     <property name="LOG_PATTERN" value="%d{yyyyMMdd HH:mm:ss.SSS} [%thread] %-3level %logger{5} - %msg %n"/>
-<!--    <property name="LOG_LOCATION" value="/app-log/demo" />-->
-<!--    <property name="LOG_FILENAME" value="demo" />-->
+    <property name="ROLLING_FILE_NAME_PATTERN" value="${LOG_FILE}.%d{yyyy-MM-dd}_%i.log" />
 
     <!-- Console Appender -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
@@ -16,7 +15,7 @@
 
     <!-- File Appender -->
     <appender name="FILEOUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_PATH}/${LOG_FILE}</file>
+        <file>${LOG_PATH}/${LOG_FILE}.log</file>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <pattern>${LOG_PATTERN}</pattern>
         </encoder>
