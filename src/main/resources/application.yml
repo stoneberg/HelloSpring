@@ -7,8 +7,8 @@ server:
 spring:
   thymeleaf:
     cache: false
-#  profiles:
-#    active: local # set deploy profile
+  profiles:
+    active: local # set deploy profile
 
 logging:
   config: classpath:logback/logback-spring.xml
